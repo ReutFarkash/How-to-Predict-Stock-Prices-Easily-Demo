@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 warnings.filterwarnings("ignore")
 
 def plot_results_multiple(predicted_data, true_data, prediction_len):
-    fig = plt.figure(facecolor='white')
+    fig = plt.figure(facecolor='white',figsize=(20,10))
     ax = fig.add_subplot(111)
     ax.plot(true_data, label='True Data')
     print('yo')
@@ -50,9 +50,16 @@ def load_data(filename, seq_len, normalise_window):
     return [x_train, y_train, x_test, y_test]
 
 def normalise_windows(window_data):
+    #print("new")
     normalised_data = []
     for window in window_data:
-        normalised_window = [((float(p) / float(window[0])) - 1) for p in window]
+        #print(window)
+        #normalised_window = [((float(p) / float(window[0])) - 1) for p in window]
+        window = [float(i) for i in window]
+        mean = np.mean((window))
+        std = np.std((window))
+        normalised_window = [((float(p) - mean)/std) for p in window]
+        #print(normalised_window)
         normalised_data.append(normalised_window)
     return normalised_data
 
